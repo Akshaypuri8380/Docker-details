@@ -1,0 +1,102 @@
+##################################Docker volume##############################################
+
+Step-by-Step Guide to Create and Use Docker Volumes
+
+Create a Volume:You can create a volume using the docker volume create command.
+
+#docker volume create my_volume
+
+List Volumes:To list all the volumes on your Docker host:
+
+#docker volume ls
+
+Inspect a Volume:To get detailed information about a specific volume:
+
+#docker volume inspect my_volume
+
+Remove a Volume:To remove a volume (ensure no containers are using it):
+
+docker volume rm my_volume
+
+Example Usage:-Here’s an example of creating a volume and using it in a container.
+
+Create a Volume:
+
+#docker volume create my_volume
+
+Run a Container with the Volume:-When running a container, you can mount the volume to a directory inside the container.
+
+#docker run -d --name my_nginx -v my_volume:/usr/share/nginx/html nginx
+
+In this example, my_volume is mounted to /usr/share/nginx/html inside the Nginx container.
+
+Access the Volume Data:-You can interact with the volume data from within the container.
+
+#docker exec -it my_nginx /bin/bash
+
+#cd /usr/share/nginx/html
+
+Remove a Volume:-First, stop and remove the container using the volume.
+
+#docker stop my_nginx
+#docker rm my_nginx
+
+Then, remove the volume.
+
+#docker volume rm my_volume
+
+
+###########################################Docker Network #########################################################
+
+Create a Network:You can create different types of networks such as bridge, overlay, or macvlan. The most commonly used is the bridge network.
+
+#docker network create my_bridge_network
+
+To create an overlay network (used in swarm mode):
+
+#docker network create --driver overlay my_overlay_network
+
+To create a macvlan network:
+
+#docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 my_macvlan_network
+
+List Networks:-To list all the networks on your Docker host:
+
+#docker network ls
+
+Inspect a Network:-To get detailed information about a specific network:
+
+#docker network inspect my_bridge_network
+
+Connect a Container to a Network:-To connect an existing container to a network:
+
+#docker network connect my_bridge_network my_container
+
+Disconnect a Container from a Network:-To disconnect a container from a network:
+
+#docker network disconnect my_bridge_network my_container
+
+Remove a Network:-To remove a network (ensure no containers are connected):
+
+#docker network rm my_bridge_network
+
+
+#######Example Usage:- Here’s an example of creating a custom network and launching containers connected to this network.
+
+Create a Bridge Network:
+
+#docker network create my_custom_network
+
+Run Containers on the Custom Network:
+
+#docker run -d --name my_nginx --network my_custom_network nginx
+
+#docker run -d --name my_app --network my_custom_network my_app_image
+
+Inspect the Network:
+
+#docker network inspect my_custom_network
+
+
+
+
